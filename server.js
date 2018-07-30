@@ -1,13 +1,12 @@
 'use strict';
 
 // Load array of notes
-const data = require('./db/notes');
 
 console.log('Hello Noteful!');
 
 // INSERT EXPRESS APP CODE HERE...
 const express = require('express');
-
+const data = require('./db/notes');
 const app = express();
 
 // ADD STATIC SERVER HERE
@@ -17,3 +16,7 @@ app.listen(8080, function () {
 }).on('error', err => {
   console.error(err);
 });
+
+app.get('/api/notes', (req, res) => {
+    res.json(data);
+  });
