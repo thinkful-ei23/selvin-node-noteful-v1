@@ -10,11 +10,12 @@ const data = require('./db/notes');
 //const morgan = require('morgan');
 const app = express();
 const { PORT } = require('./config');
+const logStuff = require('./middleware/logger');
 // ADD STATIC SERVER HERE
 // Create a static webserver
 //app.use(morgan('dev'));
 app.use(express.static('public'));
-
+app.use(logStuff);
 // Listen for incoming connections
 app.listen(PORT, function () {
   console.info(`Server listening on ${this.address().port}`);
