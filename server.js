@@ -7,11 +7,16 @@ console.log('Hello Noteful!');
 // INSERT EXPRESS APP CODE HERE...
 const express = require('express');
 const data = require('./db/notes');
+//const morgan = require('morgan');
 const app = express();
-
+const { PORT } = require('./config');
 // ADD STATIC SERVER HERE
+// Create a static webserver
+//app.use(morgan('dev'));
+app.use(express.static('public'));
 
-app.listen(8080, function () {
+// Listen for incoming connections
+app.listen(PORT, function () {
   console.info(`Server listening on ${this.address().port}`);
 }).on('error', err => {
   console.error(err);
@@ -22,7 +27,7 @@ app.get('/api/notes', (req, res) => {
     const query = req.query;
     let list = data;
     if(query.searchTerm) {
-      list = list.filter( function(item) {
+      list = data.filter( function(item) {
         return item.title.includes(query.searchTerm);
       });
     }
