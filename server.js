@@ -16,6 +16,16 @@ const logStuff = require('./middleware/logger');
 //app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(logStuff);
+app.get('/api/notes', (req, res) => {  
+  const query = req.query;
+  let list = data;
+  if(query.searchTerm) {
+    list = data.filter( function(item) {
+      return item.title.includes(query.searchTerm);
+    });
+  }
+  res.json(list);
+});
 
 app.get('/boom', (req, res, next) => {
   throw new Error('Boom!!');
@@ -38,19 +48,6 @@ app.use(function (err, req, res, next) {
     message: err.message,
     error: err
   });
-});
-app.get('/api/notes', (req, res) => {
-    
-  const query = req.query;
-  let list = data;
-  if(query.searchTerm) {
-    list = data.filter( function(item) {
-      return item.title.includes(query.searchTerm);
-    });
-  }
-
-  res.json(list);
-
 });
 
 // Listen for incoming connections
